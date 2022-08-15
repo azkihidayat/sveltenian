@@ -1,7 +1,8 @@
 <script>
-    import stores from '$lib/stores';
+    import todos from '$lib/stores/todos';
     import { fade } from 'svelte/transition';
     import { create, update } from '$lib/services/todos';
+    import { onMount } from 'svelte';
     let input;
 
     const onAdd = () => {
@@ -25,7 +26,7 @@
         <input bind:value={input} type="text" id="todo" class="input mb-2" placeholder="Type here">
         <button class="btn btn-primary mb-2" on:click|preventDefault={onAdd}>Add</button>
         
-        {#each [...$stores.todos].reverse() as todo (todo.id)}
+        {#each [...$todos].reverse() as todo (todo.id)}
             <label class="cursor-pointer label gap-2 w-full" transition:fade={{duration: 300}}>
                 <input checked={todo.checked} type="checkbox" class="checkbox checkbox-primary" on:change={(e) => onCheck({id: todo.id, checked: e.target.checked})} />
                 <span class="w-full {todo.checked ? 'line-through opacity-90' : ''}">{todo.value}</span>
